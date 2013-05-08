@@ -127,6 +127,7 @@ num  target     prot opt source               destination
 
 ###2: Block everything firewall using bash
 > This blocks everything. You will only be able to access the machine from the console. Don't do this if you are working remotely because your connection will instantly be dropped. Another way to do this would be to disable the network interface. The advantage of blocking everything with iptables instead of shutting down a network interface is that this leaves the kernel network layer still running. Applications will not complain about the network being unavailable. This also blocks all network interfaces at once, so if you have a machine with multiple interfaces this will take care of them all.
+
 ```
 #!/bin/sh
 iptables -P INPUT ACCEPT
@@ -140,6 +141,7 @@ iptables -P FORWARD DROP
 ```
 ###3: Allow everything firewall using bash
 > This opens up everything. It's the exact opposite of [Block everything](#2-Block-everything-firewall). The firewall is still technically running, but every packet is allowed through. This is the safe way to open the firewall without accidentally locking yourself out.
+
 ```
 #!/bin/sh
 iptables -P INPUT ACCEPT
@@ -150,6 +152,7 @@ iptables -X
 ```
 ###4:Ban -- block an annoying machine
 > This blocks a specific IP address from reaching your server. This is useful if you are getting annoying traffic from another machine and you want to get rid of them. Replace 255.255.255.255 with the IP address you want to drop.
+
 ```
 iptables -I INPUT -j DROP -s 255.255.255.255
 ```
@@ -159,6 +162,7 @@ iptables -D INPUT -j DROP -s 255.255.255.255
 ```
 ###5: Minimal emergency firewall using bash
 > I use this to shut down everything except SSH port 22. This is my panic script. If something seems suspicious then I use this script to put a machine into as safe a state as possible while still allowing remote SSH connections.
+
 ```
 #!/bin/sh
 # Minimal emergency firewall (block everything except SSH).
@@ -174,10 +178,12 @@ iptables -P OUTPUT DROP
 ```
 ###5: Stop / Start / Restart the Firewall
 > You can save existing firewall rules as follows:
+
 ```
 $ sudo iptables-save > firewall.rules
 ```
 > Type the following commands to stop firewall:
+```
 $ sudo iptables -X
 $ sudo iptables -t nat -F
 $ sudo iptables -t nat -X
@@ -186,14 +192,17 @@ $ sudo iptables -t mangle -X
 $ sudo iptables -P INPUT ACCEPT
 $ sudo iptables -P FORWARD ACCEPT
 $ sudo iptables -P OUTPUT ACCEPT
+```
 
 > If you are using ubuntu Linux, enter:
+
 ```
 $ sudo ufw disable
 $ sudo ufw enable
 $ sudo ufw disable
 ```
 You can use the iptables command itself to stop the firewall and delete all rules:
+
 ```
 # iptables -F
 # iptables -X
