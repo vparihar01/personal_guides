@@ -51,7 +51,6 @@ After Step 3: two SSH keys created at `~/.ssh`:
 ```    
 	~/.ssh/id_rsa
 	~/.ssh/second_rsa
-
 ```
 Then, add these two keys as following
 ```
@@ -130,13 +129,15 @@ Step 8: Clone your repo and modify your Git config
 With this set up I can clone with my default key as Github suggests:
 
 	Clone your repo
-		`git clone git@github.com:username/project.git`
-
+```	
+		git clone git@github.com:username/project.git
+```
 If I want to clone a repository from my second account I can alter the command to use the second SSH key I generated:
 	
 	Clone your repo
-		`git clone git@github.com-second:username/project.git`
-
+```	
+		git clone git@github.com-second:username/project.git
+```
 
 	Cd project and modify git config
 ```
@@ -147,13 +148,15 @@ If I want to clone a repository from my second account I can alter the command t
 		$ git config user.email "second_email@mail.com" 
 ```
 	Or you can have global git config
-		```$ git config --global user.name "First User"
-		$ git config --global user.email "email@email.com"```
-
+```
+		$ git config --global user.name "First User"
+		$ git config --global user.email "email@email.com"
+```
 
 Then use normal flow to push your code
 
-```	$ git add .
+```	
+	$ git add .
 	$ git commit -m "your comments"
 	$ git push
 ```
