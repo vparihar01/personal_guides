@@ -207,7 +207,7 @@ You can use the iptables command itself to stop the firewall and delete all rule
 ```
 Where,
 
--F : Deleting (flushing) all the rules.
--X : Delete chain.
--t table_name : Select table (called nat or mangle) and delete/flush rules.
--P : Set the default policy (such as DROP, REJECT, or ACCEPT). 
+*	-F : Deleting (flushing) all the rules.
+*	-X : Delete chain.
+*	-t table_name : Select table (called nat or mangle) and delete/flush rules.
+*	-P : Set the default policy (such as DROP, REJECT, or ACCEPT). 
