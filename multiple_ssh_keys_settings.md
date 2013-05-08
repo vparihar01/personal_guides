@@ -5,7 +5,7 @@ Github using SSH client connection. If it is a single-user (first), generate a k
 
 Step 1: Go to SSH key dir
 ---------------------------------
-First, cd to ~ / ssh to use __ssh-keygen -t rsa -C 'your_mail@youremail.com'__ to generate new SSH key
+First, cd to ~ / ssh to use `ssh-keygen -t rsa -C 'your_mail@youremail.com'` to generate new SSH key
 You are then prompted for an optional password. After the key is generate you copy & paste it into your GitHub account settings.
 
 Create different public key
@@ -47,35 +47,36 @@ Which should give you something like this:
 
 Step 4: Add Saved SSK keys
 ---------------------------------
-After Step 3: two SSH keys created at __~/.ssh__:
-    
+After Step 3: two SSH keys created at `~/.ssh`:
+```    
 	~/.ssh/id_rsa
 	~/.ssh/second_rsa
 
+```
 Then, add these two keys as following
-
+```
 	$ ssh-add ~/.ssh/id_rsa
 	$ ssh-add ~/.ssh/second_rsa
-
+```
 You can delete all cached keys before
-
+```
 	$ ssh-add -D
-	
+```	
 Step 5: Finally, you can check your saved keys
 ---------------------------------
-
+```
 	$ ssh-add -l
-
+```
 
 Step 6: Modify the ssh config
 ---------------------------------
-
+```
 	$ cd ~/.ssh/
 	$ touch config
 	$ subl -a config
-
-Then added
-
+```
+Then add below lines into `config` file
+```
 	#First account
 	Host github.com
 		HostName github.com
@@ -87,10 +88,11 @@ Then added
 		HostName github.com
 		User git
 		IdentityFile ~/.ssh/second_rsa
-		
+```		
 Step 7: Test everything out
 ---------------------------------
 To make sure everything is working you'll now SSH to GitHub. When you do this, you will be asked to authenticate this action using your password, which for this purpose is the passphrase you created earlier. Don't change the git@github.com part. That's supposed to be there.
+```	
 	For first SSH key do this:
 
 		ssh -T git@github.com
@@ -120,8 +122,7 @@ To make sure everything is working you'll now SSH to GitHub. When you do this, y
 
 		# Hi username! You've successfully authenticated, but GitHub does not
 		provide shell access.
-	
-
+```	
 
 
 Step 8: Clone your repo and modify your Git config
@@ -129,32 +130,32 @@ Step 8: Clone your repo and modify your Git config
 With this set up I can clone with my default key as Github suggests:
 
 	Clone your repo
-		git clone git@github.com:username/project.git
+		`git clone git@github.com:username/project.git`
 
 If I want to clone a repository from my second account I can alter the command to use the second SSH key I generated:
 	
 	Clone your repo
-		git clone git@github.com-second:username/project.git
+		`git clone git@github.com-second:username/project.git`
 
 
 	Cd project and modify git config
-
+```
 		$ git config user.name "First User"
 		$ git config user.email "first_email@email.com" 
  
 		$ git config user.name "Second User"
 		$ git config user.email "second_email@mail.com" 
-
+```
 	Or you can have global git config
-		$ git config --global user.name "First User"
-		$ git config --global user.email "email@email.com"
+		```$ git config --global user.name "First User"
+		$ git config --global user.email "email@email.com"```
 
 
 Then use normal flow to push your code
 
-	$ git add .
+```	$ git add .
 	$ git commit -m "your comments"
 	$ git push
-
+```
 
 In fact, if I wanted to I could have a different SSH key for every account I have; GitHub, Bitbucket, or any other service that requires one.
