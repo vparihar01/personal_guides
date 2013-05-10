@@ -8,6 +8,9 @@ setting bash,multiple ssh's etc.
 *  [Guides for Multiple SSH Keys settings for different github account.](/multiple_ssh_keys_settings.md)
 *  [Rails Project Guidelines](/rails_guidelines.md)
 *  [Sass Writing Guidelines](/sass_writing_practices.md)
+*  [GIT Version Control Good Practices](/version_control_good_practices.md)
+*  [GIT Cheat Sheet](/git_sheet.md)
+   *  Git handy commands which might increase your productivity.
 
 > 1 is stdout. 2 is stderr.
 > Here is one way to remember this construct (altough it is not entirely accurate): at first, 2>1 may look like a good way to redirect stderr to stdout. However, it will actually be interpreted as "redirect stderr to a file named 1". & indicates that what follows is a file descriptor and not a filename. So the construct becomes: 2>&1.
