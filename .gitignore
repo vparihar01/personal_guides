@@ -1,0 +1,26 @@
+# .idea  files come from Ruby Mine, a Rails IDE.
+.idea
+.idea/workspace.xml
+
+# Ignore Vim untitled and unsaved buffer swapfiles
+*.s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+# Files from Textmate IDE
+*.tmproj
+*.tmproject
+tmtags
+
+### OSX (Mac OS) ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
