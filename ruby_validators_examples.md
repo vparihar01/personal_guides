@@ -19,8 +19,10 @@ class Person
   include ActiveModel::MyValidator
   validates_with MyValidator
 end
-
 # This method can be used to validate the whole record
+```
+
+```ruby
 # This method below, on the other hand, lets you validate one attribute
 
 class TitleValidator < ActiveModel::EachValidator
