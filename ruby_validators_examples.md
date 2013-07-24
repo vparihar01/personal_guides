@@ -35,6 +35,7 @@ class Person
   validates :title, :presence => true, :title => true
 end
 ```
+The TitleValidator class inherits from ActiveModel::EachValidator. We have to define one method in the class, validate_each, that takes three parameters called object, attribute and value. The method then checks that the value include in array i.e ['Mr.', 'Mrs.', 'Dr.'] and if not it will add the attribute to the objects errors.
 
 You might have noticed that in the second example, the TitleValidator is “magically” invoked upon the :title => true option in the validates :title statement.
 This is another really cool feature that ActiveModel::Validator introduces – all the options passed to validates method stripped of reserved keys (:if, :unless, :on, :allow_blank, :allow_nil) and the remaining keys are resolved to class names with a const_get("#{key.to_s.camelize}Validator") call.
