@@ -1,7 +1,8 @@
 # Building Rails 3 custom validators
-Every validation extends the base class of ActiveModel::Validator (which handles validating the whole record) or ActiveModel::EachValidator (which handles validating the attribute on the record). The latter module also takes care of :allow_nil and :allow_blank options for you, so the validations are not even invoked when the value doesn’t match the given conditions.
+Every validation extends the base class of **ActiveModel::Validator** (which handles validating the whole record) or **ActiveModel::EachValidator** (which handles validating the attribute on the record). The latter module also takes care of **:allow_nil** and **:allow_blank** options for you, so the validations are not even invoked when the value doesn’t match the given conditions.
 I’m going to give a quick example of how these two base classes differ.
 
+**Any class that inherits from ActiveModel::Validator must implement a method called validate which accepts a record.**
 ```ruby
 # define my validator
 class MyValidator < ActiveModel::Validator
