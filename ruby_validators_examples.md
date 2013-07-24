@@ -38,7 +38,9 @@ end
 The TitleValidator class inherits from ActiveModel::EachValidator. We have to define one method in the class, validate_each, that takes three parameters called object, attribute and value. The method then checks that the value include in array i.e ['Mr.', 'Mrs.', 'Dr.'] and if not it will add the attribute to the objects errors.
 
 You might have noticed that in the second example, the TitleValidator is “magically” invoked upon the :title => true option in the validates :title statement.
+
 This is another really cool feature that ActiveModel::Validator introduces – all the options passed to validates method stripped of reserved keys (:if, :unless, :on, :allow_blank, :allow_nil) and the remaining keys are resolved to class names with a const_get("#{key.to_s.camelize}Validator") call.
+
 In simple terms it’s a hash key to class name lookup, where everything before *Validator in you class name will be the name of your validation method as an option key.
 
 ```ruby
@@ -56,6 +58,14 @@ validates :name, :fancy_validation_with_ponies => true
 validates_with(FancyValidationWithPoniesValidator, options_and_attributes)
 ```
 
+One more thing: if the value of a validation method key is a hash, it will be passed as options to the validator.
+
+```ruby
+validates :foo, :bar => { :amount => 100, :if => :has_bar?, :on => :save, :allow_nil => true }
+
+# this is what BarValidator is passed as options
+options => { :amount => 100, :allow_nil => true }
+```
 #Email Validators
 
 ```ruby
