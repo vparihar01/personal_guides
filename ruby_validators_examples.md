@@ -1,7 +1,8 @@
 # Building Rails 3 custom validators
-Every validation extends the base class of ActiveModel::Validator (which handles validating the whole record) or ActiveModel::EachValidator (which handles validating the attribute on the record). The latter module also takes care of :allow_nil and :allow_blank options for you, so the validations are not even invoked when the value doesn’t match the given conditions.
+Every validation extends the base class of **ActiveModel::Validator** (which handles validating the whole record) or **ActiveModel::EachValidator** (which handles validating the attribute on the record). The latter module also takes care of **:allow_nil** and **:allow_blank** options for you, so the validations are not even invoked when the value doesn’t match the given conditions.
 I’m going to give a quick example of how these two base classes differ.
 
+**Any class that inherits from ActiveModel::Validator must implement a method called validate which accepts a record.**
 ```ruby
 # define my validator
 class MyValidator < ActiveModel::Validator
@@ -18,8 +19,10 @@ class Person
   include ActiveModel::MyValidator
   validates_with MyValidator
 end
-
 # This method can be used to validate the whole record
+```
+
+```ruby
 # This method below, on the other hand, lets you validate one attribute
 
 class TitleValidator < ActiveModel::EachValidator
@@ -28,7 +31,10 @@ class TitleValidator < ActiveModel::EachValidator
     record.errors[attribute] << 'must be Mr. Mrs. or Dr.' unless ['Mr.', 'Mrs.', 'Dr.'].include?(value)
   end
 end
+```
+The TitleValidator class inherits from ActiveModel::EachValidator. We have to define one method in the class, validate_each, that takes three parameters called object, attribute and value. The method then checks that the value include in array i.e ['Mr.', 'Mrs.', 'Dr.'] and if not it will add the attribute to the objects errors.
 
+```ruby
 class Person
   include ActiveModel::Validations
   # validate the :title attribute with PresenceValidator and TitleValidator
@@ -37,8 +43,10 @@ end
 ```
 
 You might have noticed that in the second example, the TitleValidator is “magically” invoked upon the :title => true option in the validates :title statement.
+
 This is another really cool feature that ActiveModel::Validator introduces – all the options passed to validates method stripped of reserved keys (:if, :unless, :on, :allow_blank, :allow_nil) and the remaining keys are resolved to class names with a const_get("#{key.to_s.camelize}Validator") call.
-In simple terms it’s a hash key to class name lookup, where everything before *Validator in you class name will be the name of your validation method as an option key.
+
+Having an title key in the validates hash means that the validator will look for a class called title_validator and passes the validation behaviour into the custom class that we just wrote.
 
 ```ruby
 # this is resolved to BarValidator class
@@ -55,6 +63,14 @@ validates :name, :fancy_validation_with_ponies => true
 validates_with(FancyValidationWithPoniesValidator, options_and_attributes)
 ```
 
+One more thing: if the value of a validation method key is a hash, it will be passed as options to the validator.
+
+```ruby
+validates :foo, :bar => { :amount => 100, :if => :has_bar?, :on => :save, :allow_nil => true }
+
+# this is what BarValidator is passed as options
+options => { :amount => 100, :allow_nil => true }
+```
 #Email Validators
 
 ```ruby
